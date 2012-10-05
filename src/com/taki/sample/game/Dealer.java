@@ -2,6 +2,8 @@ package com.taki.sample.game;
 
 import java.util.Vector;
 
+
+
 public class Dealer {
 	
 	/**
@@ -52,6 +54,10 @@ public class Dealer {
 				return false;
 			if(king_state)		// any 'next' card is legal
 				king_state=false;
+			if(inPack.getColor().equals(Config.COLOR.get(4)))  {	// if inPack Color = IRRELEVANT
+				if(!inPack.getType().equals(Config.TYPE.get(13)) && !inPack.getType().equals(Config.TYPE.get(14)) && !inPack.getType().equals(Config.TYPE.get(15)) && !inPack.getType().equals(Config.TYPE.get(17)))
+					return false;
+			}
 			if(player_cards.elementAt(ind).getType().equals(Config.TYPE.get(14))) {  // if SWITCH HANDS
 				if(plus_three_state)	// this will not evade +3 state
 					return false;
@@ -247,6 +253,8 @@ public class Dealer {
 					if(player_cards.elementAt(ind).getType().equals(Config.TYPE.get(16))) { // if TAKI
 						taki_state = true;
 						taki_color = player_cards.elementAt(ind).getColor();
+						if(!taki_color.equals(currently_active_card.getColor()))		// wrong taki color
+							return false;
 						cannot_throw_more=false;
 						currently_active_card = new Card(player_cards.elementAt(ind));
 						player_cards.remove(ind);
